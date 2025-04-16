@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Carrinho | Casa do Dentista</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topo">
+    <div class="logo">Casa do Dentista</div>
+    <a href="index.html" class="botao-voltar">Voltar</a>
+  </header>
+
+  <main class="conteudo-principal">
+    <h1 class="titulo-principal">Seu Carrinho</h1>
+    <section id="lista-carrinho" class="lista-produtos"></section>
+    <p id="total" class="total-compra"></p>
+
+    <div class="formulario-finalizar">
+      <button onclick="finalizarPedido()" class="btn">Finalizar Pedido</button>
+    </div>
+  </main>
+
+  <script src="produtos.js"></script>
+  <script>
+    function carregarCarrinho() {
+      const carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+      const lista = document.getElementById("lista-carrinho");
+      lista.innerHTML = "";
+      let total = 0;
+
+      carrinho.forEach(item => {
+        const produto = produtos.find(p => p.codigo === item.codigo);
+        if (produto) {
+          const subtotal = produto.preco * item.quantidade;
+          total += subtotal;
+
+          const div = document.createElement("div");
+          div.className = "item-produto";
+          div.innerHTML = `
+            <img src="img/${produto.codigo}.jpg" />
+            <div>
+              <h3>${produto.nome}</h3>
+              <p>${produto.descricao}</p>
+              <p><strong>R$ ${produto.preco.toFixed(2)}</strong></p>
+              <p>Código: ${produto.codigo}</p>
+              <p>Qtd: 
+                <button onclick="alterarQtd(${produto.codigo}, -1)" class="btn-quantidade">-</button>
+                ${item.quantidade}
+                <button onclick="alterarQtd(${produto.codigo}, 1)" class="btn-quantidade">+</button>
+                <button onclick="removerProduto(${produto.codigo})" class="btn-remover">Excluir</button>
+              </p>
+            </div>
+          `;
+          lista.appendChild(div);
+        }
+      });
+
+      document.getElementById("total").textContent = `Total: R$ ${total.toFixed(2)}`;
+    }
+
+    function alterarQtd(codigo, delta) {
+      const carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+      const item = carrinho.find(p => p.codigo === codigo);
+      if (item) {
+        item.quantidade += delta;
+        if (item.quantidade <= 0) {
+          removerProduto(codigo);
+        } else {
+          localStorage.setItem("carrinho", JSON.stringify(carrinho));
+          carregarCarrinho();
+        }
+      }
+    }
+
+    function removerProduto(codigo) {
+      let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+      carrinho = carrinho.filter(p => p.codigo !== codigo);
+      localStorage.setItem("carrinho", JSON.stringify(carrinho));
+      carregarCarrinho();
+    }
+
+    function finalizarPedido() {
+      const cliente = JSON.parse(localStorage.getItem("cliente"));
+      const carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+      let mensagem = `Pedido - Casa do Dentista:%0ANome: ${cliente.nome}%0AWhatsApp: ${cliente.whatsapp}%0A%0AProdutos:%0A`;
+      let total = 0;
+
+      carrinho.forEach(item => {
+        const produto = produtos.find(p => p.codigo === item.codigo);
+        if (produto) {
+          const subtotal = produto.preco * item.quantidade;
+          total += subtotal;
+          mensagem += `• ${produto.codigo} - ${produto.nome} x${item.quantidade} - R$ ${subtotal.toFixed(2)}%0A`;
+        }
+      });
+
+      mensagem += `%0ATotal: R$ ${total.toFixed(2)}`;
+      const link = `https://wa.me/SEUNUMERO?text=${mensagem}`;
+      window.open(link, "_blank");
+    }
+
+    window.onload = carregarCarrinho;
+  </script>
+</body>
+</html>

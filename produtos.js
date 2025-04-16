@@ -1,0 +1,22 @@
+const produtos = [
+  { codigo: "P001", nome: "Espelho Bucal", descricao: "Espelho com cabo anatômico", preco: 15.90 },
+  { codigo: "P002", nome: "Sugador Cirúrgico", descricao: "Sugador descartável transparente", preco: 8.50 },
+  { codigo: "P003", nome: "Pinça Clínica", descricao: "Pinça de aço inox", preco: 22.00 },
+  { codigo: "P004", nome: "Espátula Dupla", descricao: "Espátula para resina", preco: 12.00 },
+  { codigo: "P005", nome: "Sonda Exploradora", descricao: "Sonda ponta fina", preco: 10.90 },
+  { codigo: "P006", nome: "Cureta Gengival", descricao: "Para raspagem periodontal", preco: 29.90 },
+  { codigo: "P007", nome: "Kit de Profilaxia", descricao: "Escova + taça + pasta", preco: 19.99 },
+  { codigo: "P008", nome: "Posicionador Radiográfico", descricao: "Kit de posicionadores", preco: 39.90 },
+  { codigo: "P009", nome: "Bandeja Inox", descricao: "Bandeja esterilizável", preco: 17.50 },
+  { codigo: "P010", nome: "Seringa Carpule", descricao: "Para anestesia local", preco: 27.80 },
+  { codigo: "P011", nome: "Agulhas Gengivais", descricao: "Pacote com 100 unidades", preco: 45.00 },
+  { codigo: "P012", nome: "Caneta de Alta Rotação", descricao: "Com rotor cerâmico", preco: 299.90 },
+  { codigo: "P013", nome: "Resina Composta", descricao: "Cor A2, 4g", preco: 69.99 },
+  { codigo: "P014", nome: "Adesivo Universal", descricao: "Frasco com 5ml", preco: 55.00 },
+  { codigo: "P015", nome: "Lima Endodôntica", descricao: "Kit com 6 unidades", preco: 34.90 },
+  { codigo: "P016", nome: "Papel Articulador", descricao: "Pacote com 300 folhas", preco: 11.20 },
+  { codigo: "P017", nome: "Fio de Sutura", descricao: "Nylon 4.0 com agulha", preco: 18.90 },
+  { codigo: "P018", nome: "Cimento de Ionômero", descricao: "Para restaurações", preco: 59.80 },
+  { codigo: "P019", nome: "Luvas de Procedimento", descricao: "Caixa com 100 unid", preco: 25.00 },
+  { codigo: "P020", nome: "Máscara Descartável", descricao: "Tripla camada com elástico", preco: 13.50 }
+];

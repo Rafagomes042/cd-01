@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Listas de Semestre | Casa do Dentista</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topo">
+    <div class="logo">Casa do Dentista</div>
+    <a href="carrinho.html" class="botao-carrinho-header">Carrinho</a>
+  </header>
+
+  <main class="conteudo-principal">
+    <h1 class="titulo-principal">Listas de Semestres</h1>
+
+    <section class="botoes-listas">
+      <button onclick="abrirLista('Primeiro Semestre')" class="btn-semestre">1º Semestre</button>
+      <button onclick="abrirLista('Segundo Semestre')" class="btn-semestre">2º Semestre</button>
+      <button onclick="abrirLista('Terceiro Semestre')" class="btn-semestre">3º Semestre</button>
+      <button onclick="abrirLista('Quarto Semestre')" class="btn-semestre">4º Semestre</button>
+      <button onclick="abrirLista('Quinto Semestre')" class="btn-semestre">5º Semestre</button>
+    </section>
+
+    <section id="lista-produtos" class="lista-produtos"></section>
+  </main>
+
+  <script src="produtos.js"></script>
+  <script src="listas.js"></script>
+  <script>
+    function abrirLista(nomeLista) {
+      const lista = listas[nomeLista];
+      const listaContainer = document.getElementById("lista-produtos");
+      listaContainer.innerHTML = `<h2>${nomeLista}</h2>`;
+
+      lista.forEach(item => {
+        const produto = produtos.find(p => p.codigo === item.codigo);
+        if (produto) {
+          const div = document.createElement("div");
+          div.className = "item-produto";
+          div.innerHTML = `
+            <img src="img/${produto.codigo}.jpg" alt="${produto.nome}" />
+            <div>
+              <h3>${produto.nome}</h3>
+              <p>${produto.descricao}</p>
+              <p><strong>R$ ${produto.preco.toFixed(2)}</strong></p>
+              <p><small>Código: ${produto.codigo}</small></p>
+              <button onclick="adicionarAoCarrinho(${produto.codigo}, 1)" class="btn">Adicionar ao carrinho</button>
+            </div>
+          `;
+          listaContainer.appendChild(div);
+        }
+      });
+    }
+
+    function adicionarAoCarrinho(codigo, quantidade) {
+      let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+      const itemExistente = carrinho.find(p => p.codigo === codigo);
+      if (itemExistente) {
+        itemExistente.quantidade += quantidade;
+      } else {
+        carrinho.push({ codigo, quantidade });
+      }
+      localStorage.setItem("carrinho", JSON.stringify(carrinho));
+      alert("Item adicionado ao carrinho!");
+    }
+  </script>
+</body>
+</html>

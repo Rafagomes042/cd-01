@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Casa do Dentista</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+</head>
+<body>
+  <header class="header">
+    <div class="user-info">
+      <h2>Olá, Dr(a) <span id="nomeCliente"></span>!</h2>
+    </div>
+    <input type="text" id="searchInput" placeholder="Buscar produto..." />
+  </header>
+
+  <main id="produtosContainer" class="produtos-lista">
+    <!-- Produtos serão carregados dinamicamente -->
+  </main>
+
+  <nav class="menu-inferior">
+    <button onclick="location.href='index.html'"><img src="img/home.svg" /><span>Início</span></button>
+    <button onclick="location.href='listas.html'"><img src="img/list.svg" /><span>Listas</span></button>
+    <button onclick="location.href='carrinho.html'"><img src="img/cart.svg" /><span>Carrinho</span></button>
+    <button onclick="location.href='cadastro.html'"><img src="img/user.svg" /><span>Perfil</span></button>
+  </nav>
+
+  <script src="produtos.js"></script>
+  <script src="script.js"></script>
+  <script>
+    const cliente = JSON.parse(localStorage.getItem("cliente"));
+    if (!cliente) {
+      alert("Você precisa se cadastrar para acessar o site.");
+      window.location.href = "cadastro.html"; // Redireciona para a página de cadastro
+    } else {
+      document.getElementById("nomeCliente").textContent = cliente.nome;
+      exibirProdutos(produtos); // Chama a função para exibir os produtos
+    }
+  </script>
+</body>
+</html>
